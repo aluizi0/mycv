@@ -43,51 +43,53 @@ function App() {
       <div className="row h-100">
         
         {/* === ESQUERDA: EDITOR === */}
-        <div className="col-md-4 bg-dark text-white h-100 overflow-auto p-4">
-          <div className="d-flex justify-content-between mb-4">
+        <div className="col-md-4 bg-dark text-white overflow-auto">
+          <div className="d-flex justify-content-between mb-4 p-4 pb-0">
             <h4>Editor</h4>
             <button className="btn btn-success btn-sm" onClick={handlePrint}>
               <FontAwesomeIcon icon={faFilePdf} /> Baixar PDF
             </button>
           </div>
 
-          <div className="mb-3">
+          <div className="mb-3 px-4 pt-4">
             <label className="text-warning small fw-bold">DADOS PESSOAIS</label>
             <input className="form-control mb-2 bg-secondary text-white border-0" name="nome" placeholder="Nome" value={personalData.nome} onChange={handlePersonalChange} />
             <input className="form-control mb-2 bg-secondary text-white border-0" name="titulo" placeholder="Cargo" value={personalData.titulo} onChange={handlePersonalChange} />
             <input className="form-control bg-secondary text-white border-0" name="contato" placeholder="Contato" value={personalData.contato} onChange={handlePersonalChange} />
           </div>
 
-          <hr className="border-secondary" />
+          <hr className="border-secondary mx-4" />
 
-          {sections.map((section) => (
-            <div key={section.id} className="mb-3 p-3 border border-secondary rounded">
-              <div className="d-flex justify-content-between mb-2">
-                <input 
-                  className="form-control form-control-sm bg-dark text-info fw-bold border-0" 
-                  value={section.title} 
-                  onChange={(e) => handleSectionChange(section.id, 'title', e.target.value)}
+          <div className="px-4">
+            {sections.map((section) => (
+              <div key={section.id} className="mb-3 p-3 border border-secondary rounded">
+                <div className="d-flex justify-content-between mb-2">
+                  <input 
+                    className="form-control form-control-sm bg-dark text-info fw-bold border-0" 
+                    value={section.title} 
+                    onChange={(e) => handleSectionChange(section.id, 'title', e.target.value)}
+                  />
+                  <button className="btn btn-sm btn-outline-danger" onClick={() => removeSection(section.id)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </div>
+                <textarea 
+                  className="form-control bg-secondary text-white border-0" 
+                  rows="3"
+                  value={section.content} 
+                  onChange={(e) => handleSectionChange(section.id, 'content', e.target.value)}
                 />
-                <button className="btn btn-sm btn-outline-danger" onClick={() => removeSection(section.id)}>
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
               </div>
-              <textarea 
-                className="form-control bg-secondary text-white border-0" 
-                rows="3"
-                value={section.content} 
-                onChange={(e) => handleSectionChange(section.id, 'content', e.target.value)}
-              />
-            </div>
-          ))}
+            ))}
 
-          <button className="btn btn-outline-primary w-100 mt-2" onClick={addSection}>
-            <FontAwesomeIcon icon={faPlus} /> Adicionar Seção
-          </button>
+            <button className="btn btn-outline-primary w-100 mt-2" onClick={addSection}>
+              <FontAwesomeIcon icon={faPlus} /> Adicionar Seção
+            </button>
+          </div>
         </div>
 
         {/* === DIREITA: PREVIEW === */}
-        <div className="col-md-8 bg-secondary bg-opacity-25 h-100 overflow-auto d-flex justify-content-center p-5">
+        <div className="col-md-8 bg-secondary bg-opacity-25 overflow-auto d-flex justify-content-center align-items-flex-start p-5">
           
           {/* AQUI ESTÁ O TRUQUE: style={{ backgroundColor: 'white' }} DIRETO NA DIV */}
           <div 
@@ -97,7 +99,9 @@ function App() {
               minHeight: '297mm', 
               padding: '20mm',
               boxShadow: '0 0 10px rgba(0,0,0,0.3)',
-              color: 'black'
+              color: 'black',
+              marginTop: '20px',
+              marginBottom: '20px'
             }}
           >
             <div className="text-center mb-4 border-bottom pb-3" style={{borderColor: '#333'}}>
